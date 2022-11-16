@@ -1,0 +1,117 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+#define TOK_BUFSIZE 1024
+
+char *read_line(void);
+char **split_line(char *line);
+int shell_launch(char **args);
+
+/**
+ * read_line - reads input from command line
+ *
+ * Return: buffer containing read line
+ */
+char *read_line(void)
+{
+	char *line = NULL;
+	size_t buffsize = 0;
+
+	if (getline(&line, &buffsize, stdin) == -1)
+	{
+		if (feof(stdin))
+			exit(EXIT_SUCCESS);
+		else
+		{
+			perror("Error reading line");
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	return (line);
+}
+
+/**
+ * split_line - splits string into  sequence of non-empty tokens
+ * @line: string to split
+ *
+ * Return: array containing split tokens, EXIT_FAILURE on failure
+ */
+char **split_line(char *line)
+{
+	int bufsize = TOK_BUFSIZE;
+	int position = 0;
+	char *token;
+	char **tokens = malloc(sizeof(char) * bufsize);
+
+	if (tokens == NULL)
+	{
+		perror("Allocation error\n");
+		exit(EXIT_FAILURE);
+	}
+
+	token = strtok(line, " \t\r\n\a");
+	while (token != NULL)
+	{
+		tokens[position] = token;
+		position++;
+
+		token = strtok(NULL, " \t\r\n\a");
+	}
+	tokens[position] = NULL;
+	return (tokens);
+}
+
+/**
+ * shell_launch - creates child process and executes program
+ * @args: array of arguments supplied to program
+ *
+ * Return: 1
+ */
+int shell_launch(char **args)
+{
+	pid_t pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (execve(args[0], args, NULL) == -1)
+			perror("Error executing");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid < 0)
+		perror("Error forking");
+	else
+	{
+		wait(NULL);
+	}
+
+	return (1);
+}
+
+/**
+ * main - loop to execute programs
+ *
+ * Return: 0
+ */
+int main(void)
+{
+	char *line;
+	char **args;
+	int status;
+
+	do {
+		printf("#cisfun$ ");
+		line = read_line();
+		args = split_line(line);
+		status = shell_launch(args);
+
+		free(line);
+		free(args);
+	} while (status);
+
+	return (0);
+}
