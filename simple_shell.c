@@ -3,12 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-#define TOK_BUFSIZE 1024
-
-char *read_line(void);
-char **split_line(char *line);
-int shell_launch(char **args);
+#include "main.h"
 
 /**
  * read_line - reads input from command line
