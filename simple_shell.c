@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include "main.h"
+#include "shell.h"
 
 /**
  * read_line - reads input from command line
@@ -14,6 +9,9 @@ char *read_line(void)
 {
 	char *line = NULL;
 	size_t buffsize = 0;
+
+	if (isatty(STDIN_FILENO))
+		PRINT(PROMPT);
 
 	if (getline(&line, &buffsize, stdin) == -1)
 	{
@@ -99,7 +97,6 @@ int main(void)
 	int status;
 
 	do {
-		printf("#cisfun$ ");
 		line = read_line();
 		args = split_line(line);
 		status = shell_launch(args);
