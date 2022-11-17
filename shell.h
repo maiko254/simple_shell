@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 #define TOK_BUFSIZE 1024
 #define PRINT(c) (write(STDOUT_FILENO, c, _strlen(c)))
 #define PROMPT "#cisfun# "

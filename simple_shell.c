@@ -67,11 +67,12 @@ char **split_line(char *line)
 int shell_launch(char **args)
 {
 	pid_t pid;
+	int status;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(args[0], args, NULL) == -1)
+		if (execve(args[0], args, environ) == -1)
 			perror("Error executing");
 		exit(EXIT_FAILURE);
 	}
@@ -79,7 +80,7 @@ int shell_launch(char **args)
 		perror("Error forking");
 	else
 	{
-		wait(NULL);
+		waitpid(pid, &status, WUNTRACED);
 	}
 
 	return (1);
