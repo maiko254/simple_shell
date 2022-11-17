@@ -73,7 +73,7 @@ int shell_launch(char **args)
 	if (pid == 0)
 	{
 		if (execve(args[0], args, environ) == -1)
-			perror("Error executing");
+			perror("./hsh");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
