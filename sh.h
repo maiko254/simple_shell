@@ -11,4 +11,7 @@
 
 extern char **environ;
 
+size_t word_count(char *str, char *delim);
+char **word_list(char *str, char *delim);
+
 #endif
