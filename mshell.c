@@ -10,13 +10,13 @@ extern char **environ;
 
 int main(void)
 {
-	char *lineptr;
+	char *lineptr, **arr;
 	size_t n;
 	pid_t child_pid;
-	int status;
+	int status, len;
 	struct stat st;
-	char **arr;
-	int len;
+	/*char **arr;
+	int len;*/
 
 	lineptr = NULL;
 	n = 0;
@@ -26,7 +26,7 @@ int main(void)
 	{
 		len = strlen(lineptr);
 		lineptr[len - 1] = '\0';
-			
+
 		if (stat(lineptr, &st) == 0)
 		{
 			child_pid = fork();
