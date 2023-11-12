@@ -15,8 +15,6 @@ int main(void)
 	pid_t child_pid;
 	int status, len;
 	struct stat st;
-	/*char **arr;
-	int len;*/
 
 	lineptr = NULL;
 	n = 0;
