@@ -9,4 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
+extern char **environ;
+
 #endif

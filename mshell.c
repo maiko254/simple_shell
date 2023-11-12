@@ -6,7 +6,6 @@
  *
  * Return: Always 0
  */
-extern char **environ;
 
 int main(void)
 {
