@@ -42,15 +42,12 @@ int main(void)
 				execve(arr[0], arr, environ);
 			}
 			else
-			{
 				wait(&status);
-			}
 		}
 		else
 			printf("File Not Found\n");
 		printf("#mshell$ ");
 	}
-
 	free(lineptr);
 	return (0);
 }
