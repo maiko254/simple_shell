@@ -60,6 +60,7 @@ int main(void)
 size_t word_count(char *str, char *delim)
 {
 	size_t wc = 0;
+
 	if (strtok(str, delim))
 		++wc;
 	while (strtok(NULL, delim) != NULL)
