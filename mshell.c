@@ -22,7 +22,6 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("mshell$ ");
-
 		if (getline(&lineptr, &n, stdin) == EOF)
 			return (0);
 
@@ -40,13 +39,9 @@ int main(void)
 			}
 
 			if (child_pid == 0)
-			{
 				execve(arr[0], arr, environ);
-			}
 			else
-			{
-				wait(&status);
-			}
+				wait(&status);	
 		}
 		else
 			printf("File Not Found\n");
