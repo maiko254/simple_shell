@@ -41,7 +41,7 @@ int main(void)
 			if (child_pid == 0)
 				execve(arr[0], arr, environ);
 			else
-				wait(&status);	
+				wait(&status);
 		}
 		else
 			printf("File Not Found\n");
