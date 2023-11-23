@@ -18,9 +18,14 @@ int main(void)
 	lineptr = NULL;
 	n = 0;
 
-	printf("#mshell$ ");
-	while (getline(&lineptr, &n, stdin) != EOF)
+	while (1)
 	{
+		if (isatty(STDIN_FILENO))
+			printf("mshell$ ");
+
+		if (getline(&lineptr, &n, stdin) == EOF)
+			return (0);
+
 		len = strlen(lineptr);
 		lineptr[len - 1] = '\0';
 		arr = word_list(lineptr, " ");
@@ -39,11 +44,12 @@ int main(void)
 				execve(arr[0], arr, environ);
 			}
 			else
+			{
 				wait(&status);
+			}
 		}
 		else
 			printf("File Not Found\n");
-		printf("#mshell$ ");
 	}
 	free(lineptr);
 	free(arr);
